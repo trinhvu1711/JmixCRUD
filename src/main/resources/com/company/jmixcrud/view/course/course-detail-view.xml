@@ -24,7 +24,6 @@
                 <responsiveStep minWidth="0" columns="1"/>
                 <responsiveStep minWidth="40em" columns="2"/>
             </responsiveSteps>
-            <textField id="sortValueField" property="sortValue"/>
             <textField id="nameField" property="name"/>
             <textField id="scoreField" property="score"/>
             <entityPicker id="studentField" property="student">
@@ -33,6 +32,7 @@
                     <action id="entityClear" type="entity_clear"/>
                 </actions>
             </entityPicker>
+            <textField id="sortValueField" property="sortValue"/>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseButton" action="saveAction"/>
