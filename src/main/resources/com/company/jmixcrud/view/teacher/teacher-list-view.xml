@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://teacherListView.title"
+      focusComponent="teachersDataGrid">
+    <data>
+        <collection id="teachersDc"
+                    class="com.company.jmixcrud.entity.Teacher">
+            <fetchPlan extends="_base"/>
+            <loader id="teachersDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Teacher e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <div classNames="panel-container" width="100%">
+            <formLayout classNames="panel-form">
+                <textField id="nameField" property="name" width="100%"
+                           label="Name"/>
+                <textField id="ageField" property="ageName" width="100%"
+                           label="Age"/>
+                <textField id="phoneNumberField" property="phoneNumber" width="100%"
+                           label="Phone Number"/>
+                <textField id="addressField" property="address" width="100%"
+                           label="Address"/>
+            </formLayout>
+            <hbox justifyContent="END" classNames="panel-footer" width="100%">
+                <button id="classroomsDataGridRefreshBtn" action="teachersDataGrid.refresh"
+                        themeNames="primary"
+                        text="search"
+                        title="search" icon="lumo:search"/>
+            </hbox>
+        </div>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="teachersDataGrid.create"/>
+            <button id="editButton" action="teachersDataGrid.edit"/>
+            <button id="removeButton" action="teachersDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="teachersDl"/>
+        </hbox>
+        <dataGrid id="teachersDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="teachersDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+                <action id="refresh" type="list_refresh"/>
+            </actions>
+            <columns resizable="true">
+                <column property="name"/>
+                <column property="age"/>
+                <column property="phoneNumber"/>
+                <column property="address"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

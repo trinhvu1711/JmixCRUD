@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://studentDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="studentDc"
+                  class="com.company.jmixcrud.entity.Student">
+            <fetchPlan extends="_base">
+                <property name="classroom" fetchPlan="_base">
+                    <property name="teacher" fetchPlan="_base"/>
+                </property>
+            </fetchPlan>
+            <loader id="studentDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="studentDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="studentCodeField" property="studentCode"/>
+            <textField id="nameField" property="name"/>
+            <datePicker id="birthDateField" property="birthDate"/>
+            <textField id="citizenIdField" property="citizenId"/>
+            <textField id="addressField" property="address"/>
+            <textField id="phoneNumberField" property="phoneNumber"/>
+            <entityPicker id="classroomField" property="classroom">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

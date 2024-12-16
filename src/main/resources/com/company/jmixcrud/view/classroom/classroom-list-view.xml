@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://classroomListView.title"
+      focusComponent="classroomsDataGrid">
+    <data>
+        <collection id="classroomsDc"
+                    class="com.company.jmixcrud.entity.Classroom">
+            <fetchPlan extends="_base">
+                <property name="teacher" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="classroomsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Classroom e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="teachersDc"
+                    class="com.company.jmixcrud.entity.Teacher">
+            <fetchPlan extends="_base"/>
+            <loader id="teachersDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Teacher e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <div classNames="panel-container" width="100%">
+            <formLayout classNames="panel-form">
+                <textField id="classroomCodeField" property="classroomCode" width="100%"
+                           label="Classroom Code"/>
+                <textField id="classroomNameField" property="classroomName" width="100%"
+                           label="Classroom Name"/>
+                <entityComboBox id="teacherField" property="teacher" itemsContainer="teachersDc" metaClass="Teacher"
+                    label="Teacher"
+                >
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityComboBox>
+            </formLayout>
+            <hbox justifyContent="END" classNames="panel-footer" width="100%">
+                <button id="classroomsDataGridRefreshBtn" action="classroomsDataGrid.refresh"
+                        themeNames="primary"
+                        text="search"
+                        title="search" icon="lumo:search"/>
+            </hbox>
+        </div>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="classroomsDataGrid.create"/>
+            <button id="editButton" action="classroomsDataGrid.edit"/>
+            <button id="removeButton" action="classroomsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="classroomsDl"/>
+        </hbox>
+        <dataGrid id="classroomsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="classroomsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="refresh" type="list_refresh"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="classroomCode"/>
+                <column property="classroomName"/>
+                <column property="teacher"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>
