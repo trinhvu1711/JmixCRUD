@@ -9,8 +9,10 @@
                 <property name="classroom" fetchPlan="_base">
                     <property name="teacher" fetchPlan="_base"/>
                 </property>
+                <property name="courses" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="studentDl"/>
+            <collection id="coursesDc" property="courses"/>
         </instance>
     </data>
     <facets>
@@ -43,5 +45,23 @@
             <button id="saveAndCloseButton" action="saveAction"/>
             <button id="closeButton" action="closeAction"/>
         </hbox>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="coursesDataGrid.create"/>
+            <button id="editButton" action="coursesDataGrid.edit"/>
+            <button id="removeButton" action="coursesDataGrid.remove"/>
+<!--            <simplePagination id="pagination" dataLoader="coursesDl"/>-->
+        </hbox>
+        <dataGrid id="coursesDataGrid" dataContainer="coursesDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+                <column property="score"/>
+                <column property="sortValue"/>
+            </columns>
+        </dataGrid>
     </layout>
 </view>

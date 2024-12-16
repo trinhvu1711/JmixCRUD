@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -19,6 +20,9 @@ public class Student {
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
+
+    @OneToMany(mappedBy = "student")
+    private List<Course> courses;
 
     @Column(name = "STUDENT_CODE", nullable = false)
     @NotNull
@@ -44,6 +48,14 @@ public class Student {
     @JoinColumn(name = "CLASSROOM_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Classroom classroom;
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 
     public Classroom getClassroom() {
         return classroom;
